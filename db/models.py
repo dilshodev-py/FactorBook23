@@ -65,3 +65,9 @@ class Book(CreatedModel):
 
     def __repr__(self):
         return self.title
+
+
+class Admin(CreatedModel):
+    author: Mapped[str] = mapped_column(VARCHAR(255))
+    password: Mapped[str] = mapped_column(VARCHAR(255))
+

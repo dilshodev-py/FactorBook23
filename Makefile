@@ -14,4 +14,6 @@ down:
 	docker compose down
 rmi:
 	docker rmi factorbook23-bot:latest
+web_admin:
+	uvicorn web.app:app --host=localhost --port=8000
 

@@ -15,7 +15,10 @@ class DB:
     DB_PORT = getenv('DB_PORT')
     DB_PASSWORD = getenv('DB_PASSWORD')
 
-
+class Web:
+    USERNAME = getenv('ADMIN_USERNAME')
+    PASSWORD = getenv('ADMIN_PASSWORD')
 class Config:
     bot = Bot()
     db = DB()
+    web = Web()
