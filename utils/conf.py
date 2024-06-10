@@ -6,7 +6,7 @@ load_dotenv()
 
 class Bot:
     BOT_TOKEN = getenv('TOKEN')
-
+    PAYMENT_CLICK_TOKEN = getenv("PAYMENT_CLICK_TOKEN")
 
 class DB:
     DB_USER = getenv('DB_USER')

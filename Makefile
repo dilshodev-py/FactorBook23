@@ -7,3 +7,11 @@ update:
 	pybabel update -d locales -D messages -i locales/messages.pot
 compile:
 	pybabel compile -d locales -D messages
+
+up:
+	docker compose up
+down:
+	docker compose down
+rmi:
+	docker rmi factorbook23-bot:latest
+

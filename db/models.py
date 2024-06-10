@@ -1,8 +1,9 @@
-from datetime import datetime
+from datetime import datetime, tzinfo
 from enum import Enum
 
-from sqlalchemy import BigInteger, VARCHAR, Enum as alEnum, TEXT, DECIMAL, SMALLINT, ForeignKey
+from sqlalchemy import BigInteger, VARCHAR, Enum as alEnum, TEXT, DECIMAL, SMALLINT, ForeignKey, func, FunctionElement
 from sqlalchemy import Column, DateTime
+from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column, relationship
 
 
@@ -15,8 +16,8 @@ class Base(DeclarativeBase):
 class CreatedModel(Base):
     __abstract__ = True
     id: Mapped[int] = mapped_column(primary_key=True)
-    created_at = Column(DateTime(), default=datetime.utcnow)
-    updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime(), default=func.current_timestamp())
+    updated_at = Column(DateTime(), default=func.current_timestamp(), onupdate=func.current_timestamp())
 
 
 class User(CreatedModel):
@@ -39,7 +40,7 @@ class User(CreatedModel):
 class Category(CreatedModel):
     __tablename__ = "categories"
     name: Mapped[str] = mapped_column(VARCHAR(255))
-    books: Mapped[list['Book']] = relationship( back_populates='category')
+    books: Mapped[list['Book']] = relationship(back_populates='category')
 
     def __repr__(self):
         return self.name
@@ -60,7 +61,7 @@ class Book(CreatedModel):
     author: Mapped[str] = mapped_column(VARCHAR(255))
     photo_url: Mapped[str] = mapped_column(VARCHAR(255))
     category_id: Mapped[int] = mapped_column(ForeignKey('categories.id', ondelete='CASCADE'))
-    category: Mapped['Category'] = relationship( back_populates='books')
+    category: Mapped['Category'] = relationship(back_populates='books')
 
     def __repr__(self):
         return self.title
